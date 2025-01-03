@@ -7,6 +7,7 @@ const ShowBook = () => {
   const [book, setBook] = useState({});
   const { id } = useParams();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -15,6 +16,7 @@ const ShowBook = () => {
       navigate("/");
       return;
     }
+    setLoading(true);
     axios
       .get(`https://backend-6wvj.onrender.com/books/${id}`, {
         headers: {
@@ -27,10 +29,21 @@ const ShowBook = () => {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    return (
+      <div className="p-4 d-flex align-items-center justify-content-center container style=height: 100vh flex-column display-4 mb-5">
+        Loading...
+      </div>
+    );
+  }
   return (
-    <div className="p-4">
+    <div className="p-4 d-flex align-items-center justify-around container style=height: 100vh flex-column">
       <BackButton />
       <h1 className="my-4">Show Book</h1>
       <div className="border border-2 rounded rounded-xl p-4">

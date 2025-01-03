@@ -11,6 +11,7 @@ const CreateBooks = () => {
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(false);
 
   // Handle file upload to Cloudinary
   const handleFileUpload = async (file) => {
@@ -26,6 +27,7 @@ const CreateBooks = () => {
     formData.append("upload_preset", "bookss"); // Set your upload preset (you need to create one in Cloudinary)
 
     try {
+      setLoading(true);
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/deizs3n5d/image/upload",
         formData
@@ -82,9 +84,16 @@ const CreateBooks = () => {
         });
       });
   };
+  if (loading) {
+    return (
+      <div className="p-4 d-flex align-items-center justify-content-center container style=height: 100vh flex-column display-4 mb-5">
+        Loading...
+      </div>
+    );
+  }
 
   return (
-    <div className="p-4">
+    <div className="p-4 d-flex align-items-center justify-content-center container style=height: 100vh flex-column log bg-light">
       <BackButton />
       <h1 className="my-4">Create Book</h1>
       <div className="p-4">
@@ -93,7 +102,7 @@ const CreateBooks = () => {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="mx-5 px-4 py-2"
+          className="mx-4 px-4 py-2"
         />
       </div>
       <div className="my-4">
@@ -106,7 +115,7 @@ const CreateBooks = () => {
         />
       </div>
       <div className="my-4">
-        <label className="mx-4">Publish Year</label>
+        <label className="mx-2">Publish Year</label>
         <input
           type="text"
           value={publishYear}
@@ -115,12 +124,12 @@ const CreateBooks = () => {
         />
       </div>
 
-      <div className="my-4">
-        <label className="text-xl mr-4 text-gray-500">Image</label>
+      <div className="my-4 mx-4">
+        <label className="text-xl mx-4 text-gray-500">Image</label>
         <input
           type="file"
           onChange={(e) => setImage(e.target.files[0])}
-          className="border-2 border-gray-500 px-4 py-2 w-full"
+          className="border-2 border-gray-500   w-full my-2"
         />
       </div>
 

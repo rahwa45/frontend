@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+
 import { useSnackbar } from "notistack";
 
 const Login = () => {
@@ -12,8 +13,9 @@ const Login = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleLogin = () => {
+    setLoading(true);
     axios
-      .post("https://backend-6wvj.onrender.com/user/login", {
+      .post("http://localhost:5555/user/login", {
         username,
         password,
       })
@@ -24,17 +26,40 @@ const Login = () => {
         localStorage.setItem("token", token);
         localStorage.setItem("user", username);
 
+        setLoading(true);
+
         enqueueSnackbar("Login successfull", { variant: "success" });
         navigate("/home", { state: { username } });
       })
       .catch((error) => {
-        enqueueSnackbar("Login faild", { variant: "error" });
-        console.log(error);
+        console.log("Error Response:", error.response);
+        if (error.response?.status === 403) {
+          enqueueSnackbar(error.response.data.message, {
+            variant: "warning",
+          });
+        } else if (error.response?.status === 401) {
+          enqueueSnackbar("Invalid credentials. Please try again.", {
+            variant: "error",
+          });
+        } else {
+          // Notify user of unexpected errors
+          enqueueSnackbar("An error occurred. Please try again later.", {
+            variant: "error",
+          });
+        }
       });
   };
 
+  if (loading) {
+    return (
+      <div className="p-4 d-flex align-items-center justify-content-center container style=height: 100vh flex-column display-4 mb-5">
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <div className="p-4">
+    <div className="p-4 d-flex align-items-center justify-content-center container p-4 style=height: 100vh flex-column log bg-light">
       <h1 className="mx-4 my-4">Login</h1>
       <div className="p-4">
         <div className="my-4">

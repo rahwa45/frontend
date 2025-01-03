@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { CiSquarePlus } from "react-icons/ci";
 import BooksTable from "../components/home/BooksTable";
+import "../App.css";
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -40,13 +41,13 @@ const Home = () => {
   }, [token]);
 
   return (
-    <div className="container p-4">
+    <div className="d-flex align-items-center justify-content-center container p-4 style=height: 100vh flex-column">
       <div className="flex justify-between items-center">
         <h1 className="lead display-4 mt-5">Books List</h1>
         <Link to="/books/create">
           <CiSquarePlus className="display-5" />
         </Link>
-        <span className="mx-2">Welcome, {usernameLocal}!</span>
+        <span className="mx-2 fs-4">Welcome, {usernameLocal}!</span>
         <button className="btn btn-primary my-3" onClick={handleLogOut}>
           Log Out
         </button>

@@ -6,6 +6,7 @@ import EditBook from "./pages/EditBook";
 import DeleteBook from "./pages/DeleteBook";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/verify/:token" element={<VerifyEmail />} />
         <Route path="/books/create" element={<CreateBooks />} />
         <Route path="/books/details/:id" element={<ShowBook />} />
         <Route path="/books/edit/:id" element={<EditBook />} />

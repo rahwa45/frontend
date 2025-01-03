@@ -5,6 +5,12 @@
   text-align: center;
 }
 
+.log {
+  width: 500px;
+  border-radius: 4px;
+  box-shadow: 0.2px 0.2px 0px black;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

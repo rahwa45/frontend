@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useSnackbar } from "notistack";
-
 import React from "react";
 
 const SignUp = () => {
@@ -20,10 +19,15 @@ const SignUp = () => {
         email,
         password,
       })
+
       .then(() => {
-        enqueueSnackbar("Sign Up successfully", { variant: "success" });
+        enqueueSnackbar(
+          "Sign Up successfully! Please check your email to verify your account.",
+          { variant: "success" }
+        );
         navigate("/");
       })
+
       .catch((error) => {
         enqueueSnackbar("Sign Up faild", { variant: "error" });
         console.log(error);
@@ -31,7 +35,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 d-flex align-items-center justify-around container style=height: 100vh flex-column bg-light log">
       <h1 className="mx-4 my-4">Sign Up</h1>
       <div className="p-4">
         <div className="my-4">
@@ -45,7 +49,7 @@ const SignUp = () => {
         </div>
 
         <div className="my-4">
-          <label className="mx-3 mr-4">Email</label>
+          <label className="mx-4 mr-4">Email</label>
           <input
             type="text"
             value={email}

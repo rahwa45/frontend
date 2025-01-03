@@ -1,13 +1,16 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "../components/BackButton";
+import { useState } from "react";
 
 const DeleteBook = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
   const handleDeleteBook = () => {
     const token = localStorage.getItem("token");
+    setLoading(true);
     axios
       .delete(`https://backend-6wvj.onrender.com/books/${id}`, {
         headers: {
@@ -22,6 +25,14 @@ const DeleteBook = () => {
         console.log(error);
       });
   };
+
+  if (loading) {
+    return (
+      <div className="p-4 d-flex align-items-center justify-content-center container style=height: 100vh flex-column display-4 mb-5">
+        Loading...
+      </div>
+    );
+  }
   return (
     <div className="p-4">
       <BackButton />

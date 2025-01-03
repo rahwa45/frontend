@@ -80,15 +80,18 @@ const EditBook = () => {
 
   // If data is still loading, show a loading indicator
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="p-4 d-flex align-items-center justify-content-center container style=height: 100vh flex-column display-4 mb-5">
+        Loading...
+      </div>
+    );
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 d-flex align-items-center justify-content-center container p-4 style=height: 100vh flex-column log bg-light">
       <BackButton />
       <h1 className="my-4">Edit Book</h1>
 
-      {/* Form for editing the book */}
       <form onSubmit={handleEditBook}>
         <div className="p-4">
           <label className="mx-4">Title</label>
@@ -112,7 +115,7 @@ const EditBook = () => {
             onChange={(e) =>
               setFormData({ ...formData, author: e.target.value })
             }
-            className="mx-4 px-4 py-2"
+            className="mx-5 px-4 py-2"
             required
           />
         </div>
@@ -125,13 +128,12 @@ const EditBook = () => {
             onChange={(e) =>
               setFormData({ ...formData, publishYear: e.target.value })
             }
-            className="mx-4 px-4 py-2"
+            className="mx-3 px-4 py-2"
             required
           />
         </div>
 
-        {/* Submit button */}
-        <button type="submit" className="btn btn-primary btn-lg">
+        <button type="submit" className="btn btn-primary btn-lg mx-4">
           Save
         </button>
       </form>
