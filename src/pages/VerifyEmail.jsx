@@ -10,18 +10,23 @@ const VerifyEmail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Send the token to the backend for verification
-    axios
-      .get(`https://backend-6wvj.onrender.com/user/verify/${token}`)
-      .then(() => {
+    const verifyEmail = async () => {
+      try {
+        // Send the token to the backend for verification
+        await axios.get(
+          `https://backend-6wvj.onrender.com/user/verify/${token}`
+        );
         enqueueSnackbar("Email verified successfully!", { variant: "success" });
         navigate("/");
-      })
-
-      .catch(() => {
+      } catch (error) {
         enqueueSnackbar("Invalid or expired token", { variant: "error" });
-      })
-      .finally(() => setLoading(false));
+        console.error("Verification error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (token) verifyEmail(); // Call verifyEmail only if token is defined
   }, [token, enqueueSnackbar, navigate]);
 
   return (
