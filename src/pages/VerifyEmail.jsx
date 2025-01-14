@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 
 const VerifyEmail = () => {
-  const { token } = useParams(); // Get the token from the URL params
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(true);
+
+  // Extract the query parameter 'token' from the URL
+  const { search } = useLocation();
+  const query = new URLSearchParams(search);
+  const token = query.get("token");
 
   useEffect(() => {
     const verifyEmail = async () => {
       try {
         // Send the token to the backend for verification
         await axios.get(
-          `https://backend-6wvj.onrender.com/user/verify/${token}`
+          `https://backend-6wvj.onrender.com/user/verify?token=${token}`
         );
         enqueueSnackbar("Email verified successfully!", { variant: "success" });
         navigate("/");
